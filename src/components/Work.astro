@@ -1,0 +1,43 @@
+---
+import type { CollectionEntry } from "astro:content";
+import ProjectShowcase from "./ProjectShowcase.astro";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section
+  id="work"
+  class="section section--ruled work"
+  aria-labelledby="work-title"
+>
+  <div class="shell">
+    <div class="section-head" data-reveal>
+      <span class="label">01 — Selected work</span>
+      <div class="section-head__title">
+        <h2 id="work-title" class="section-title">
+          Dua proyek,<br /><em>dua tahap belajar.</em>
+        </h2>
+      </div>
+      <p class="section-head__copy">
+        Setiap proyek ditulis bersama statusnya. Yang sudah tayang diberi tautan
+        aslinya, sementara yang masih konsep tidak diklaim selesai.
+      </p>
+    </div>
+
+    <div class="work__list">
+      {
+        projects.map((project, index) => (
+          <ProjectShowcase
+            project={project}
+            index={index + 1}
+            total={projects.length}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,193 @@
+---
+import { skills, type SkillLevel } from "../data/skills";
+
+const levelLabel: Record<SkillLevel, string> = {
+  dipakai: "dipakai di proyek",
+  dipelajari: "sedang dipelajari",
+};
+---
+
+<section
+  id="skills"
+  class="section section--ruled skills"
+  aria-labelledby="skills-title"
+>
+  <div class="shell">
+    <div class="section-head" data-reveal>
+      <span class="label">03 — Skills</span>
+      <div class="section-head__title">
+        <h2 id="skills-title" class="section-title">
+          Alat dan kemampuan,<br /><em>tanpa angka persentase.</em>
+        </h2>
+      </div>
+      <p class="section-head__copy">
+        Dua penanda saja: yang sudah dipakai untuk membangun proyek dan yang
+        masih dipelajari. Tidak ada skor yang dikarang untuk terlihat lebih
+        lengkap.
+      </p>
+    </div>
+
+    <div class="skills__legend" data-reveal>
+      <span class="skills__legend-item">
+        <span class="skills__mark skills__mark--used" aria-hidden="true"></span>
+        Dipakai di proyek
+      </span>
+      <span class="skills__legend-item">
+        <span
+          class="skills__mark skills__mark--learning"
+          aria-hidden="true"
+        ></span>
+        Sedang dipelajari
+      </span>
+      <span class="label skills__legend-note">Dua status, bukan skor</span>
+    </div>
+
+    <ul class="skills__groups">
+      {
+        skills.map((group, index) => (
+          <li
+            class="skill-group"
+            data-reveal
+            style={`--reveal-delay: ${index * 60}ms`}
+          >
+            <span class="label skill-group__index">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div class="skill-group__head">
+              <h3>{group.title}</h3>
+              <p>{group.note}</p>
+            </div>
+            <ul class="skill-group__items">
+              {group.items.map((item) => (
+                <li class:list={["skill", `skill--${item.level}`]}>
+                  <span class="skills__mark" aria-hidden="true"></span>
+                  {item.name}
+                  <span class="sr-only"> — {levelLabel[item.level]}</span>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .skills__legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.75rem;
+    padding-block: 0.9rem;
+    border-top: var(--hairline) solid var(--c-line);
+    border-bottom: var(--hairline) solid var(--c-line);
+    margin-bottom: 0.5rem;
+  }
+
+  .skills__legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--c-ink-soft);
+    font-size: 0.8125rem;
+  }
+
+  .skills__legend-note {
+    margin-left: auto;
+  }
+
+  .skills__mark {
+    display: inline-block;
+    width: 0.45rem;
+    height: 0.45rem;
+    flex: none;
+    background-color: var(--c-accent);
+  }
+
+  .skills__mark--learning,
+  .skill--dipelajari .skills__mark {
+    background-color: transparent;
+    border: var(--hairline) solid var(--c-muted);
+  }
+
+  .skills__groups {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skill-group {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 4fr) minmax(0, 7fr);
+    gap: 1rem 1.5rem;
+    padding-block: 1.6rem;
+    border-bottom: var(--hairline) solid var(--c-line);
+    align-items: start;
+  }
+
+  .skill-group__head {
+    display: grid;
+    gap: 0.4rem;
+    min-width: 0;
+  }
+
+  .skill-group__head h3 {
+    font-size: 1.5rem;
+    line-height: 1.05;
+  }
+
+  .skill-group__head p {
+    max-width: 24rem;
+    color: var(--c-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .skill-group__items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .skill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 0.7rem;
+    border: var(--hairline) solid var(--c-line);
+    color: var(--c-ink-soft);
+    font-size: 0.8125rem;
+    line-height: 1;
+  }
+
+  @media (max-width: 960px) {
+    .skill-group {
+      grid-template-columns: 2.5rem minmax(0, 1fr);
+    }
+
+    .skill-group__head,
+    .skill-group__items {
+      grid-column: 2;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .skill-group {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .skill-group__head,
+    .skill-group__items {
+      grid-column: 1;
+    }
+
+    .skills__legend-note {
+      display: none;
+    }
+  }
+</style>

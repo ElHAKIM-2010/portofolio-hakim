@@ -1,0 +1,98 @@
+---
+import ThemeToggle from "./ThemeToggle";
+import MobileNav from "./MobileNav";
+
+const items = [
+  { id: "work", label: "Work" },
+  { id: "about", label: "About" },
+  { id: "contact", label: "Contact" },
+];
+---
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a href="/" class="wordmark" aria-label="El Hakim — beranda">
+      <span>EL HAKIM</span>
+      <span class="wordmark__mark" aria-hidden="true"></span>
+    </a>
+
+    <nav class="site-nav" aria-label="Navigasi utama">
+      {items.map((item) => <a href={`/#${item.id}`} class="nav-link">{item.label}</a>)}
+    </nav>
+
+    <div class="site-header__actions">
+      <ThemeToggle client:load />
+      <MobileNav items={items} client:load />
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background-color: var(--c-paper);
+    border-bottom: var(--hairline) solid var(--c-line);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    height: var(--header-height);
+  }
+
+  .site-nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(1.25rem, 2.5vw, 2.5rem);
+  }
+
+  .nav-link {
+    position: relative;
+    padding-block: 0.35rem;
+    color: var(--c-ink-soft);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-editorial);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background-color: var(--c-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-editorial);
+  }
+
+  .nav-link:hover {
+    color: var(--c-ink);
+  }
+
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 899px) {
+    .site-nav {
+      display: none;
+    }
+  }
+</style>

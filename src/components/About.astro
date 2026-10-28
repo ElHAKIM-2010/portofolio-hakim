@@ -1,0 +1,192 @@
+---
+import { profile } from "../data/profile";
+
+const { photo, about } = profile;
+---
+
+<section
+  id="about"
+  class="section section--ruled about"
+  aria-labelledby="about-title"
+>
+  <div class="shell">
+    <div class="section-head" data-reveal>
+      <span class="label">02 — About</span>
+      <div class="section-head__title">
+        <h2 id="about-title" class="section-title">
+          Belajar dengan membangun,<br /><em>bukan hanya menonton.</em>
+        </h2>
+      </div>
+      <p class="section-head__copy">{about.lead}</p>
+    </div>
+
+    <div class="about__grid">
+      <figure class="about__portrait" data-reveal>
+        <div class="about__photo">
+          <img
+            src={photo.src}
+            srcset={photo.srcset}
+            sizes="(max-width: 780px) 100vw, (max-width: 960px) 42vw, 34vw"
+            width={photo.width}
+            height={photo.height}
+            alt={photo.alt}
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <figcaption class="about__caption">
+          <span class="label">El Hakim</span>
+          <span class="label">SMK · RPL</span>
+        </figcaption>
+      </figure>
+
+      <div class="about__story" data-reveal style="--reveal-delay: 80ms">
+        <div class="about__text">
+          {about.paragraphs.map((paragraph) => <p class="about__para">{paragraph}</p>)}
+        </div>
+
+        <div class="about__principles">
+          <p class="label">Cara saya bekerja</p>
+          <ol class="principles">
+            {
+              about.principles.map((principle, index) => (
+                <li class="principle">
+                  <span class="label principle__index">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <div class="principle__body">
+                    <h3>{principle.title}</h3>
+                    <p>{principle.body}</p>
+                  </div>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .about__grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2.5rem var(--gutter);
+    align-items: start;
+  }
+
+  .about__portrait {
+    grid-column: 1 / 5;
+    margin: 0;
+  }
+
+  .about__photo {
+    position: relative;
+    border: var(--hairline) solid var(--c-line);
+    background-color: var(--c-paper-raised);
+    overflow: hidden;
+  }
+
+  .about__photo img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.04);
+    transition: filter var(--dur-slow) var(--ease-editorial);
+  }
+
+  .about__photo:hover img {
+    filter: grayscale(0) contrast(1);
+  }
+
+  .about__caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.7rem;
+  }
+
+  .about__story {
+    grid-column: 6 / -1;
+    min-width: 0;
+  }
+
+  .about__text {
+    display: grid;
+    gap: 1.15rem;
+    max-width: 38rem;
+  }
+
+  .about__para {
+    color: var(--c-ink-soft);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .about__para:first-child {
+    color: var(--c-ink);
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.1rem + 1vw, 1.85rem);
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .about__principles {
+    margin-top: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .principles {
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  .principle {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    gap: 0.5rem 1rem;
+    padding-block: 1.15rem;
+    border-bottom: var(--hairline) solid var(--c-line);
+  }
+
+  .principle__body {
+    display: grid;
+    gap: 0.3rem;
+  }
+
+  .principle h3 {
+    font-size: 1.4rem;
+    line-height: 1.1;
+  }
+
+  .principle p {
+    color: var(--c-ink-soft);
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    max-width: 34rem;
+  }
+
+  @media (max-width: 960px) {
+    .about__portrait {
+      grid-column: 1 / 6;
+    }
+
+    .about__story {
+      grid-column: 7 / -1;
+    }
+  }
+
+  @media (max-width: 780px) {
+    .about__portrait,
+    .about__story {
+      grid-column: 1 / -1;
+    }
+
+    .about__portrait {
+      max-width: 26rem;
+    }
+  }
+</style>

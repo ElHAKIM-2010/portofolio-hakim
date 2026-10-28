@@ -1,0 +1,74 @@
+---
+interface Props {
+  size?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const { size = "md", class: className } = Astro.props;
+---
+
+<div class:list={["edition-mark", `edition-mark--${size}`, className]} aria-hidden="true">
+  <div class="edition-mark__grid">
+    {
+      Array.from({ length: 16 }, (_, index) => (
+        <span class:list={["edition-mark__cell", { "is-accent": index === 6 }]} />
+      ))
+    }
+  </div>
+  <div class="edition-mark__meta">
+    <span>EH</span>
+    <span>ED. 01</span>
+  </div>
+</div>
+
+<style>
+  .edition-mark {
+    --mark-size: 8rem;
+    width: var(--mark-size);
+  }
+
+  .edition-mark--sm {
+    --mark-size: 2.75rem;
+  }
+
+  .edition-mark--md {
+    --mark-size: 5rem;
+  }
+
+  .edition-mark--lg {
+    --mark-size: 8rem;
+  }
+
+  .edition-mark__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    aspect-ratio: 1;
+    padding: 1px;
+    background-color: var(--c-line);
+  }
+
+  .edition-mark__cell {
+    background-color: var(--c-paper);
+  }
+
+  .edition-mark__cell.is-accent {
+    background-color: var(--c-accent);
+  }
+
+  .edition-mark__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    color: var(--c-muted);
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    letter-spacing: 0.12em;
+    line-height: 1;
+  }
+
+  .edition-mark--sm .edition-mark__meta {
+    display: none;
+  }
+</style>

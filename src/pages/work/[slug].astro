@@ -1,0 +1,365 @@
+---
+import { getCollection, render } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import ProjectPreview from "../../components/ProjectPreview.astro";
+import ProjectGallery from "../../components/ProjectGallery.astro";
+
+export async function getStaticPaths() {
+  const projects = (await getCollection("projects")).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
+
+  return projects.map((project, index) => ({
+    params: { slug: project.id },
+    props: {
+      project,
+      next: projects[(index + 1) % projects.length],
+    },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<"projects">;
+  next: CollectionEntry<"projects">;
+}
+
+const { project, next } = Astro.props;
+const {
+  title,
+  category,
+  summary,
+  status,
+  statusLabel,
+  statusNote,
+  role,
+  year,
+  technologies,
+  links,
+} = project.data;
+
+const { Content } = await render(project);
+const hasLinks = Boolean(links.demo || links.source);
+---
+
+<BaseLayout title={`${title} — El Hakim`} description={summary}>
+  <Header />
+
+  <main id="main">
+    <article class="case">
+      <header class="case__head shell">
+        <nav class="case__crumb" aria-label="Breadcrumb">
+          <a href="/#work">Work</a>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{title}</span>
+        </nav>
+
+        <div class="case__intro" data-reveal>
+          <div class="case__kicker">
+            <span class="label">{category}</span>
+            <span class:list={["status", `status--${status}`]}>
+              <span class="status__dot" aria-hidden="true"></span>
+              {statusLabel}
+            </span>
+          </div>
+
+          <h1 class="case__title">{title}</h1>
+          <p class="case__summary">{summary}</p>
+        </div>
+
+        <dl class="case__facts" data-reveal style="--reveal-delay: 70ms">
+          <div>
+            <dt class="label">Tahun</dt>
+            <dd>{year}</dd>
+          </div>
+          <div>
+            <dt class="label">Peran</dt>
+            <dd>{role}</dd>
+          </div>
+          <div>
+            <dt class="label">Kategori</dt>
+            <dd>{category}</dd>
+          </div>
+          <div>
+            <dt class="label">Teknologi</dt>
+            <dd>
+              {technologies.length
+                ? technologies.join(", ")
+                : "Belum ditetapkan"}
+            </dd>
+          </div>
+        </dl>
+      </header>
+
+      <div class="case__media shell" data-reveal>
+        <ProjectPreview project={project} />
+      </div>
+
+      <div class="case__body shell">
+        <aside class="case__aside" aria-label="Detail proyek">
+          <div class="case__aside-inner">
+            <p class="label">Catatan status</p>
+            <p class="case__note">{statusNote}</p>
+
+            {
+              hasLinks ? (
+                <ul class="case__links">
+                  {links.demo && (
+                    <li>
+                      <a
+                        href={links.demo}
+                        class="link-arrow"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        Buka demo <span aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  )}
+                  {links.source && (
+                    <li>
+                      <a
+                        href={links.source}
+                        class="link-arrow"
+                        target="_blank"
+                        rel="noopener"
+                      >
+                        Kode sumber <span aria-hidden="true">↗</span>
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              ) : (
+                <p class="case__unavailable">
+                  Demo dan kode sumber belum tersedia untuk publik.
+                </p>
+              )
+            }
+
+            <a href="/#work" class="link-arrow case__back">
+              <span aria-hidden="true">←</span> Semua proyek
+            </a>
+          </div>
+        </aside>
+
+        <div class="case__content prose" data-reveal>
+          <Content />
+        </div>
+      </div>
+
+      <ProjectGallery project={project} />
+
+      <nav class="case__next shell" aria-label="Proyek berikutnya">
+        <span class="label">Proyek berikutnya</span>
+        <a href={`/work/${next.id}/`} class="case__next-link">
+          <span>{next.data.title}</span>
+          <span aria-hidden="true">→</span>
+        </a>
+        <span class="label">{next.data.category}</span>
+      </nav>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .case__head {
+    padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .case__crumb {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.55rem;
+    padding-bottom: 1rem;
+    border-bottom: var(--hairline) solid var(--c-line);
+    color: var(--c-muted);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .case__crumb a {
+    color: var(--c-ink-soft);
+    text-decoration: none;
+  }
+
+  .case__crumb a:hover {
+    color: var(--c-ink);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+  }
+
+  .case__intro {
+    display: grid;
+    gap: 1.25rem;
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem);
+  }
+
+  .case__kicker {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  .case__title {
+    font-size: clamp(3rem, 9vw, 8.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    max-width: 14ch;
+  }
+
+  .case__summary {
+    max-width: 40rem;
+    color: var(--c-ink-soft);
+    font-size: var(--text-lead);
+    line-height: 1.6;
+  }
+
+  .case__facts {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem var(--gutter);
+    margin: 0;
+    padding-block: 1.25rem;
+    border-top: var(--hairline) solid var(--c-line);
+    border-bottom: var(--hairline) solid var(--c-line);
+  }
+
+  .case__facts div {
+    display: grid;
+    gap: 0.4rem;
+    align-content: start;
+    min-width: 0;
+  }
+
+  .case__facts dd {
+    margin: 0;
+    color: var(--c-ink-soft);
+    font-size: 0.9375rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
+  }
+
+  .case__media {
+    margin-top: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .case__body {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 3rem var(--gutter);
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-block: clamp(3rem, 6vw, 5rem);
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  .case__aside {
+    grid-column: 1 / 4;
+    min-width: 0;
+  }
+
+  .case__aside-inner {
+    position: sticky;
+    top: calc(var(--header-height) + 2rem);
+    display: grid;
+    gap: 0.9rem;
+    justify-items: start;
+  }
+
+  .case__note {
+    padding-top: 0.9rem;
+    border-top: var(--hairline) solid var(--c-line);
+    width: 100%;
+    color: var(--c-ink-soft);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .case__links {
+    display: grid;
+    gap: 0.7rem;
+    width: 100%;
+    margin: 0.25rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .case__unavailable {
+    color: var(--c-muted);
+    font-size: 0.8125rem;
+    line-height: 1.55;
+  }
+
+  .case__back {
+    margin-top: 0.6rem;
+  }
+
+  .case__content {
+    grid-column: 4 / -1;
+    min-width: 0;
+  }
+
+  .case__next {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  .case__next-link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    color: var(--c-ink);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.2rem + 4vw, 4.25rem);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease-editorial);
+  }
+
+  .case__next-link span:last-child {
+    transition: transform var(--dur-base) var(--ease-editorial);
+  }
+
+  .case__next-link:hover span:last-child {
+    transform: translateX(6px);
+  }
+
+  @media (max-width: 960px) {
+    .case__facts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .case__aside,
+    .case__content {
+      grid-column: 1 / -1;
+    }
+
+    .case__aside-inner {
+      position: static;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .case__facts {
+      grid-template-columns: 1fr;
+      gap: 0.9rem;
+    }
+
+    .case__next-link {
+      font-size: clamp(1.75rem, 8vw, 2.5rem);
+    }
+  }
+</style>

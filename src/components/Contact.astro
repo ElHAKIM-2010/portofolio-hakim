@@ -1,0 +1,193 @@
+---
+import { profile } from "../data/profile";
+
+const { contacts } = profile;
+---
+
+<section
+  id="contact"
+  class="section section--ruled contact"
+  aria-labelledby="contact-title"
+>
+  <div class="shell">
+    <div class="contact__panel" data-reveal>
+      <div class="contact__meta">
+        <span class="label">04 — Contact</span>
+        <span class="label">Terbuka untuk kolaborasi belajar</span>
+      </div>
+
+      <h2 id="contact-title" class="contact__title">
+        Have an idea<br /><em>worth building?</em>
+      </h2>
+
+      <div class="contact__lower">
+        <p class="contact__copy">
+          Saya terbuka untuk proyek sekolah, kolaborasi belajar, atau percakapan
+          tentang web, desain, dan cara membuat sebuah produk terasa lebih
+          jelas.
+        </p>
+
+        {
+          contacts.length > 0 ? (
+            <ul class="contact__links">
+              {contacts.map((contact) => (
+                <li>
+                  <a
+                    href={contact.href}
+                    class="contact__link"
+                    rel={contact.href.startsWith("http") ? "noopener" : undefined}
+                    target={contact.href.startsWith("http") ? "_blank" : undefined}
+                  >
+                    <span>{contact.label}</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div class="contact__pending">
+              <span class="label">Kanal kontak</span>
+              <p>
+                Email dan tautan sosial belum tersedia. Sementara itu, proses
+                dan studi kasus bisa dibaca di bagian{" "}
+                <a href="#work">Selected work</a>.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact__panel {
+    padding: clamp(1.5rem, 5vw, 4.5rem);
+    background-color: var(--c-accent);
+    color: var(--c-accent-ink);
+    border: var(--hairline) solid
+      color-mix(in srgb, var(--c-accent-ink) 22%, transparent);
+  }
+
+  .contact__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: var(--hairline) solid
+      color-mix(in srgb, var(--c-accent-ink) 24%, transparent);
+  }
+
+  .contact__meta .label {
+    color: var(--c-accent-ink);
+    opacity: 0.72;
+  }
+
+  .contact__title {
+    margin-block: clamp(2rem, 6vw, 4.5rem) clamp(2.25rem, 5vw, 3.5rem);
+    font-size: clamp(2.75rem, 1rem + 8vw, 8.5rem);
+    line-height: 0.9;
+    letter-spacing: -0.03em;
+    color: var(--c-accent-ink);
+  }
+
+  .contact__title em {
+    font-style: italic;
+  }
+
+  .contact__lower {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: 1.5rem var(--gutter);
+    align-items: end;
+    padding-top: clamp(1.5rem, 3vw, 2.25rem);
+    border-top: var(--hairline) solid
+      color-mix(in srgb, var(--c-accent-ink) 24%, transparent);
+  }
+
+  .contact__copy {
+    max-width: 34rem;
+    font-size: clamp(1rem, 0.95rem + 0.4vw, 1.25rem);
+    line-height: 1.55;
+    text-wrap: pretty;
+  }
+
+  .contact__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    justify-self: end;
+    width: min(100%, 22rem);
+    border-top: var(--hairline) solid
+      color-mix(in srgb, var(--c-accent-ink) 30%, transparent);
+  }
+
+  .contact__link {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.8rem;
+    border-bottom: var(--hairline) solid
+      color-mix(in srgb, var(--c-accent-ink) 30%, transparent);
+    color: var(--c-accent-ink);
+    font-size: 1rem;
+    text-decoration: none;
+  }
+
+  .contact__link span:last-child {
+    transition: transform var(--dur-base) var(--ease-editorial);
+  }
+
+  .contact__link:hover span:last-child {
+    transform: translate(3px, -3px);
+  }
+
+  .contact__pending {
+    justify-self: end;
+    width: min(100%, 24rem);
+    padding: 1.25rem 1.35rem;
+    background-color: var(--c-paper);
+    border: var(--hairline) solid
+      color-mix(in srgb, var(--c-accent-ink) 24%, transparent);
+  }
+
+  :global([data-theme="dark"]) .contact__pending {
+    background-color: color-mix(
+      in srgb,
+      var(--c-accent-ink) 88%,
+      var(--c-accent)
+    );
+  }
+
+  .contact__pending .label {
+    color: var(--c-muted);
+  }
+
+  .contact__pending p {
+    margin-top: 0.55rem;
+    color: var(--c-ink-soft);
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+
+  .contact__pending a {
+    color: var(--c-ink);
+    text-decoration-color: var(--c-accent);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.18em;
+  }
+
+  @media (max-width: 780px) {
+    .contact__lower {
+      grid-template-columns: 1fr;
+      align-items: start;
+    }
+
+    .contact__links,
+    .contact__pending {
+      justify-self: start;
+    }
+  }
+</style>

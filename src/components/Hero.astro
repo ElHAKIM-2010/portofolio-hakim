@@ -1,0 +1,244 @@
+---
+import { profile } from "../data/profile";
+import EditionMark from "./EditionMark.astro";
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="shell hero__inner">
+    <div class="hero__meta">
+      <span class="label">{profile.edition}</span>
+      <span class="label">Web development · UI/UX</span>
+    </div>
+
+    <div class="hero__stage">
+      <h1 id="hero-title" class="hero__title">
+        <span class="hero__line">Building digital</span>
+        <span class="hero__line"><em>experiences</em></span>
+        <span class="hero__line hero__line--last">
+          with purpose<span class="hero__square" aria-hidden="true"></span>
+        </span>
+      </h1>
+      <div class="hero__mark">
+        <EditionMark size="lg" />
+      </div>
+    </div>
+
+    <div class="hero__lower">
+      <div class="hero__identity">
+        <p class="hero__name">{profile.name}</p>
+        <p class="label">{profile.role}</p>
+      </div>
+
+      <p class="hero__intro">{profile.intro}</p>
+
+      <div class="hero__actions">
+        <a href="#work" class="link-arrow link-arrow--down">
+          Explore work <span aria-hidden="true">↓</span>
+        </a>
+        <a href="#contact" class="link-arrow link-arrow--muted">
+          Contact <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__foot">
+      <a href="#work" class="hero__scroll">
+        <span class="label">Scroll</span>
+        <span class="hero__scroll-track" aria-hidden="true">
+          <span class="hero__scroll-thumb"></span>
+        </span>
+      </a>
+      <span class="label">Selected work — 02 proyek</span>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding-block: clamp(1.5rem, 4vw, 3rem) 0;
+  }
+
+  .hero__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: var(--hairline) solid var(--c-line);
+  }
+
+  .hero__stage {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: var(--gutter);
+    align-items: end;
+    padding-block: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 4vw, 3rem);
+  }
+
+  .hero__title {
+    grid-column: 1 / 11;
+    font-size: clamp(3.25rem, 11.5vw, 10rem);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+  }
+
+  .hero__line {
+    display: block;
+  }
+
+  .hero__line em {
+    font-style: italic;
+  }
+
+  .hero__line--last {
+    white-space: nowrap;
+  }
+
+  .hero__square {
+    display: inline-block;
+    width: 0.14em;
+    height: 0.14em;
+    margin-left: 0.08em;
+    background-color: var(--c-accent);
+    transform: translateY(-0.04em);
+  }
+
+  .hero__mark {
+    grid-column: 11 / 13;
+    justify-self: end;
+    margin-bottom: 0.25rem;
+  }
+
+  .hero__lower {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 1.5rem var(--gutter);
+    padding-block: clamp(1.5rem, 4vw, 2.5rem);
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  .hero__identity {
+    grid-column: 1 / 4;
+  }
+
+  .hero__name {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    line-height: 1;
+  }
+
+  .hero__identity .label {
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  .hero__intro {
+    grid-column: 4 / 9;
+    max-width: 35rem;
+    color: var(--c-ink-soft);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+
+  .hero__actions {
+    grid-column: 9 / 13;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    justify-self: end;
+  }
+
+  .hero__foot {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 1.25rem 1.6rem;
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  .hero__scroll {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+  }
+
+  .hero__scroll-track {
+    position: relative;
+    display: block;
+    width: 1px;
+    height: 2.5rem;
+    background-color: var(--c-line);
+    overflow: hidden;
+  }
+
+  .hero__scroll-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1px;
+    height: 10px;
+    background-color: var(--c-ink);
+    transition: transform var(--dur-base) var(--ease-editorial);
+  }
+
+  .hero__scroll:hover .hero__scroll-thumb {
+    transform: translateY(1.4rem);
+  }
+
+  @media (max-width: 960px) {
+    .hero__title {
+      grid-column: 1 / -1;
+    }
+
+    .hero__mark {
+      display: none;
+    }
+
+    .hero__lower {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .hero__identity {
+      grid-column: 1 / 2;
+    }
+
+    .hero__intro {
+      grid-column: 2 / 3;
+    }
+
+    .hero__actions {
+      grid-column: 1 / -1;
+      flex-direction: row;
+      align-items: center;
+      gap: 1.5rem;
+      justify-self: start;
+      margin-top: 0.5rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .hero__lower {
+      grid-template-columns: 1fr;
+    }
+
+    .hero__identity,
+    .hero__intro {
+      grid-column: 1 / -1;
+    }
+
+    .hero__intro {
+      max-width: 30rem;
+    }
+
+    .hero__actions {
+      flex-wrap: wrap;
+    }
+
+    .hero__foot {
+      align-items: center;
+    }
+  }
+</style>
