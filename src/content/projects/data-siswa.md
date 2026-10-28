@@ -2,51 +2,82 @@
 title: "Data Siswa"
 order: 2
 category: "Manajemen data"
-summary: "Konsep aplikasi untuk mencatat, mencari, dan memperbarui data siswa dalam satu tempat."
-status: "concept"
-statusLabel: "Tahap konsep"
-statusNote: "Struktur data dan alur masih dieksplorasi; belum ada implementasi final."
-role: "Konsep & perancangan"
+summary: "Aplikasi CRUD data siswa dengan pencarian, formulir, dan tabel responsif — dibangun dengan Next.js, TypeScript, Tailwind CSS, dan MySQL."
+status: "complete"
+statusLabel: "Selesai · demo"
+statusNote: "Demo tanpa login yang terhubung ke MySQL. Siapa pun bisa mengubah data, jadi jangan gunakan data pribadi sungguhan."
+role: "Desain, frontend, backend, database"
 year: "2026"
-technologies: []
+technologies:
+  - Next.js
+  - TypeScript
+  - Tailwind CSS
+  - MySQL (Aiven)
+  - mysql2
 preview:
   kind: "records"
-  caption: "Eksplorasi tampilan daftar — bukan tangkapan layar."
-links: {}
+  caption: "Ilustrasi antarmuka daftar — bukan tangkapan layar, agar data siswa tidak ditampilkan."
+links:
+  demo: "https://data-siswa-app.vercel.app"
+  source: "https://github.com/ELHAKIM-2010/data-siswa-app"
 ---
 
 ## Ringkasan
 
-Data Siswa adalah konsep aplikasi pengelolaan data siswa. Arahnya sederhana: satu tempat untuk melihat daftar siswa, mencari data tertentu, dan memperbarui informasi tanpa berpindah berkas.
+Data Siswa adalah aplikasi administrasi untuk mencatat, mencari, memperbarui, dan menghapus data siswa. Berbeda dari mockup, versi ini benar-benar berjalan: data disimpan di MySQL dan setiap perubahan langsung tersimpan. Aplikasi dibuat sebagai proyek sekolah dan tersedia sebagai demo online.
 
 ## Masalah dan tujuan
 
-Data yang tersebar di banyak berkas membuat pencarian dan pembaruan rawan duplikasi. Tujuan konsep ini adalah struktur data yang konsisten, pencarian yang cepat, dan form yang membantu mencegah kesalahan input. Aplikasi diarahkan untuk memudahkan pekerjaan pengelola data, bukan menambah langkah baru.
+Pencatatan yang tersebar di banyak berkas membuat pencarian dan pembaruan rawan duplikasi. Tujuannya: satu sumber data, pencarian cepat, formulir yang jelas, dan konfirmasi sebelum menghapus. Aplikasi diarahkan untuk memudahkan pekerjaan pengelola data, bukan menambah langkah baru.
 
-## Arah desain
+## Fitur yang berjalan
 
-Tabel menjadi struktur utama karena data lebih mudah dibandingkan dalam baris dan kolom. Detail siswa dibuka tanpa kehilangan konteks daftar, dan form disusun mengikuti urutan informasi yang paling sering dipakai.
+- **Daftar siswa** dibaca langsung dari database, lengkap dengan jumlah total.
+- **Pencarian** berdasarkan nama, NIS, kelas, atau jurusan.
+- **Tambah data** melalui formulir dengan NIS, nama, kelas, dan jurusan.
+- **Edit data** dengan formulir yang terisi otomatis, lalu disimpan ke database.
+- **Hapus data** dengan konfirmasi sebelum dijalankan.
+- **Statistik** total siswa, hasil pencarian, dan status koneksi database.
+- **Refresh data** untuk mengambil ulang isi database.
+- **Tampilan responsif**: tabel di layar lebar dan daftar kartu di ponsel.
+- **Pesan status dan error** ketika penyimpanan berhasil atau koneksi bermasalah.
+- **API** `GET`, `POST`, `PUT`, dan `DELETE` untuk seluruh operasi data.
 
-## Pendekatan
+## Teknologi yang dipakai
 
-Saya mulai dari pertanyaan: data apa yang perlu disimpan, siapa yang boleh mengubah, dan bagaimana kesalahan dicegah. Struktur itu menjadi dasar sebelum memilih teknologi atau membuat tampilan.
+- **Next.js 16 (App Router) + React 19 + TypeScript** — halaman utama sebagai client component, dengan tipe data siswa dari formulir sampai API.
+- **Tailwind CSS 4** — tata letak, tabel, formulir, dan tampilan kartu di ponsel.
+- **Route Handlers Next.js** — endpoint `/api/siswa` dan `/api/siswa/[id]` untuk membaca dan mengubah data.
+- **MySQL di Aiven + `mysql2`** — database produksi dengan connection pool dan query berparameter.
+- **Vercel** — deployment demo; kredensial database disimpan sebagai environment variables.
+- **SQL langsung tanpa ORM** — query `SELECT`, `INSERT`, `UPDATE`, dan `DELETE` ditulis eksplisit agar alurnya mudah dipelajari.
 
-## Implementasi teknis
+## Arsitektur dan alur data
 
-Belum ada implementasi final. Teknologi akan dipilih setelah struktur data dan aturan validasi jelas, agar keputusan kode tidak mendahului kebutuhan.
+Halaman mengambil daftar lewat `GET /api/siswa`, lalu menyimpan hasilnya di state React. Pencarian dilakukan di sisi klien atas data yang sudah dimuat. Saat menambah atau mengedit, formulir dikirim ke API, server memvalidasi field, menjalankan query, lalu halaman memuat ulang data dari database.
+
+Setiap operasi memakai query berparameter, bukan menyusun SQL dari input pengguna. NIS yang duplikat ditolak oleh aturan database dan dikembalikan sebagai pesan error. ID pada operasi edit dan hapus juga diperiksa sebelum query dijalankan.
+
+## Keamanan dan batasan
+
+Aplikasi ini belum memiliki autentikasi. Artinya siapa pun yang membuka tautan demo dapat melihat, menambah, mengubah, dan menghapus data. API juga terbuka tanpa login. Karena itu demo ini hanya cocok untuk latihan dan data contoh — jangan memasukkan data pribadi siswa sungguhan.
+
+Di sisi server sudah ada validasi field wajib, pemeriksaan ID, query berparameter, dan penanganan NIS duplikat. Semua itu mencegah input kosong dan kesalahan query, tetapi tidak menggantikan autentikasi dan pembatasan akses. Daftar juga dimuat sekaligus tanpa paginasi, sehingga cocok untuk jumlah data kecil.
 
 ## Tantangan dan solusi
 
-- Menjaga data tetap konsisten ketika beberapa orang mengubahnya.
-- Membuat tabel tetap bisa dibaca di layar ponsel tanpa menghilangkan informasi penting.
-- Menangani data kosong atau dobel dengan pesan yang jelas, bukan halaman yang membingungkan.
+- **Menghubungkan Next.js ke MySQL Aiven.** Solusinya connection pool `mysql2` dengan konfigurasi SSL dan kredensial dari environment variables.
+- **Mencegah NIS ganda.** Database menolak duplikat, lalu API mengubahnya menjadi pesan yang bisa dibaca pengguna.
+- **Tabel yang sempit di ponsel.** Tabel diganti daftar kartu pada layar kecil agar nama dan aksi tetap terbaca.
+- **State setelah perubahan.** Setiap tambah, edit, atau hapus diikuti pemuatan ulang dari server agar tampilan tidak berbeda dengan database.
+- **Koneksi database gagal.** Halaman menampilkan status bermasalah dan pesan yang menjelaskan penyebabnya.
 
 ## Progres
 
-Masih tahap konsep. Yang sudah ada berupa catatan alur dan struktur data; belum ada aplikasi yang bisa dicoba. Tautan demo akan ditambahkan hanya jika implementasinya benar-benar tersedia.
+Aplikasi sudah tayang di tautan demo dan kode sumbernya tersedia publik. Proyek ini dibuat untuk latihan administrasi data di sekolah. Karena belum ada login, aplikasi tidak ditujukan untuk menyimpan data siswa nyata.
 
 ## Yang saya pelajari
 
-- Kebutuhan pengguna lebih penting daripada jumlah fitur.
-- Validasi adalah bagian dari desain, bukan pekerjaan tambahan di akhir.
-- Data yang rapi menyederhanakan tampilan dan mengurangi keputusan yang harus diambil pengguna.
+- Validasi harus dilakukan di server, bukan hanya lewat atribut formulir.
+- Query berparameter dan connection pool membuat akses database lebih aman dan rapi.
+- Aplikasi CRUD tanpa autentikasi bukan aplikasi administrasi yang siap dipakai.

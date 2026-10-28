@@ -9,9 +9,18 @@ interface Props {
 }
 
 const { project, index, total } = Astro.props;
-const { title, category, summary, status, statusLabel, year, technologies } =
-  project.data;
+const {
+  title,
+  category,
+  summary,
+  status,
+  statusLabel,
+  year,
+  technologies,
+  links,
+} = project.data;
 const href = `/work/${project.id}/`;
+const demoHost = links.demo ? new URL(links.demo).hostname : null;
 const number = String(index).padStart(2, "0");
 const totalLabel = String(total).padStart(2, "0");
 const layout = index === 1 ? "wide" : "offset";
@@ -48,9 +57,25 @@ const layout = index === 1 ? "wide" : "offset";
           : "Teknologi belum ditetapkan"}
       </p>
 
-      <a href={href} class="link-arrow project__link">
-        Baca studi kasus <span aria-hidden="true">→</span>
-      </a>
+      <div class="project__actions">
+        <a href={href} class="link-arrow project__link">
+          Baca studi kasus <span aria-hidden="true">→</span>
+        </a>
+
+        {
+          links.demo && demoHost && (
+            <a
+              href={links.demo}
+              class="project__live"
+              target="_blank"
+              rel="noopener"
+              aria-label={`Buka demo ${title} di tab baru`}
+            >
+              {demoHost} <span aria-hidden="true">↗</span>
+            </a>
+          )
+        }
+      </div>
     </div>
   </div>
 
@@ -144,8 +169,32 @@ const layout = index === 1 ? "wide" : "offset";
     margin: 0;
   }
 
-  .project__link {
+  .project__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 1.5rem;
+    width: 100%;
     margin-top: 0.35rem;
+  }
+
+  .project__link {
+    margin-top: 0;
+  }
+
+  .project__live {
+    color: var(--c-accent);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    border-bottom: var(--hairline) solid transparent;
+    overflow-wrap: anywhere;
+    transition: border-color var(--dur-fast) var(--ease-editorial);
+  }
+
+  .project__live:hover {
+    border-bottom-color: currentColor;
   }
 
   .project__media {
