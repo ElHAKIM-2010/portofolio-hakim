@@ -61,7 +61,11 @@ export const profile: Profile = {
       },
     ],
   },
-  // Isi setelah tautan tersedia. Contoh:
-  // { label: "Email", href: "mailto:alamat@contoh.com", icon: "mail" }
-  contacts: [],
+  contacts: [
+    {
+      label: "GitHub",
+      href: "https://github.com/ELHAKIM-2010",
+      icon: "github",
+    },
+  ],
 };
