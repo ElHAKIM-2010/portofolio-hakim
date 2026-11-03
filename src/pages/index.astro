@@ -8,13 +8,59 @@ import About from "../components/About.astro";
 import Skills from "../components/Skills.astro";
 import Contact from "../components/Contact.astro";
 import Footer from "../components/Footer.astro";
+import { profile } from "../data/profile";
+import { skills } from "../data/skills";
 
 const projects = (await getCollection("projects")).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "");
+const knowsAbout = skills
+  .filter((group) => ["frontend", "backend", "databases"].includes(group.id))
+  .flatMap((group) => group.items)
+  .filter((item) => item.level === "dipakai")
+  .map((item) => item.name);
+
+const structuredData = siteUrl
+  ? {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": `${siteUrl}/#website`,
+          "url": `${siteUrl}/`,
+          "name": "El Hakim — Portofolio",
+          "description":
+            "Catatan proses belajar web development, UI/UX, dan produk digital.",
+          "inLanguage": "id",
+          "author": { "@id": `${siteUrl}/#person` },
+        },
+        {
+          "@type": "Person",
+          "@id": `${siteUrl}/#person`,
+          "name": "El Hakim",
+          "jobTitle": "Aspiring Web Developer",
+          "description": profile.intro,
+          "url": `${siteUrl}/`,
+          "image": `${siteUrl}${profile.photo.src}`,
+          "sameAs": ["https://github.com/ELHAKIM-2010"],
+          "knowsAbout": knowsAbout,
+        },
+        {
+          "@type": "ProfilePage",
+          "@id": `${siteUrl}/#page`,
+          "url": `${siteUrl}/`,
+          "name": "El Hakim — Aspiring Web Developer",
+          "isPartOf": { "@id": `${siteUrl}/#website` },
+          "mainEntity": { "@id": `${siteUrl}/#person` },
+        },
+      ],
+    }
+  : undefined;
 ---
 
-<BaseLayout>
+<BaseLayout structuredData={structuredData}>
   <Header />
   <main id="main">
     <Hero />

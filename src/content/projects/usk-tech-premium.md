@@ -8,6 +8,7 @@ statusLabel: "Selesai · demo"
 statusNote: "Proyek sekolah SMK RPL. Situs demo tayang dengan data contoh; bukan toko yang menerima transaksi nyata."
 role: "Desain, frontend, backend, database"
 year: "2026"
+ogImage: "/og/usk-tech-premium.png"
 technologies:
   - Next.js
   - TypeScript

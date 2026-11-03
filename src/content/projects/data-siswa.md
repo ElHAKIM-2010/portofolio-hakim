@@ -8,6 +8,7 @@ statusLabel: "Selesai · demo"
 statusNote: "Demo tanpa login yang terhubung ke MySQL. Siapa pun bisa mengubah data, jadi jangan gunakan data pribadi sungguhan."
 role: "Desain, frontend, backend, database"
 year: "2026"
+ogImage: "/og/data-siswa.png"
 technologies:
   - Next.js
   - TypeScript

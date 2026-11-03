@@ -14,6 +14,7 @@ const projects = defineCollection({
     statusNote: z.string(),
     role: z.string(),
     year: z.string(),
+    ogImage: z.string().optional(),
     technologies: z.array(z.string()).default([]),
     preview: z.object({
       kind: z.enum(["commerce", "records"]),

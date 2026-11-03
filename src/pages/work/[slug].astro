@@ -43,9 +43,69 @@ const {
 const { Content, headings } = await render(project);
 const toc = headings.filter((heading) => heading.depth === 2);
 const hasLinks = Boolean(links.demo || links.source);
+
+const siteUrl = Astro.site?.toString().replace(/\/$/, "");
+const ogImage = project.data.ogImage ?? "/og/og-default.png";
+const url = siteUrl ? `${siteUrl}/work/${project.id}/` : undefined;
+const structuredData =
+  siteUrl && url
+    ? {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "CreativeWork",
+            "@id": `${url}#project`,
+            "name": title,
+            "description": summary,
+            "url": url,
+            "image": `${siteUrl}${ogImage}`,
+            "genre": category,
+            "keywords": technologies.join(", "),
+            "inLanguage": "id",
+            "copyrightYear": Number(year),
+            "creator": {
+              "@type": "Person",
+              "name": "El Hakim",
+              "url": `${siteUrl}/`,
+              "sameAs": ["https://github.com/ELHAKIM-2010"],
+            },
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Beranda",
+                "item": `${siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Selected work",
+                "item": `${siteUrl}/#work`,
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": title,
+                "item": url,
+              },
+            ],
+          },
+        ],
+      }
+    : undefined;
 ---
 
-<BaseLayout title={`${title} — El Hakim`} description={summary}>
+<BaseLayout
+  title={`${title} — El Hakim`}
+  description={summary}
+  image={ogImage}
+  imageAlt={`${title} — kartu studi kasus El Hakim.`}
+  ogType="article"
+  structuredData={structuredData}
+>
   <Header />
 
   <main id="main">
@@ -61,7 +121,7 @@ const hasLinks = Boolean(links.demo || links.source);
           <span aria-current="page">{title}</span>
         </nav>
 
-        <div class="case__intro" data-reveal>
+        <div class="case__intro">
           <div class="case__kicker">
             <span class="label">{category}</span>
             <span class:list={["status", `status--${status}`]}>
@@ -74,7 +134,7 @@ const hasLinks = Boolean(links.demo || links.source);
           <p class="case__summary">{summary}</p>
         </div>
 
-        <dl class="case__facts" data-reveal style="--reveal-delay: 70ms">
+        <dl class="case__facts">
           <div>
             <dt class="label">Tahun</dt>
             <dd>{year}</dd>
@@ -98,8 +158,8 @@ const hasLinks = Boolean(links.demo || links.source);
         </dl>
       </header>
 
-      <div class="case__media shell" data-reveal>
-        <ProjectPreview project={project} />
+      <div class="case__media shell">
+        <ProjectPreview project={project} priority />
       </div>
 
       <div class="case__body shell">

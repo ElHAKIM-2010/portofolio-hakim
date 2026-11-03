@@ -4,19 +4,27 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  image?: string;
+  imageAlt?: string;
+  ogType?: "website" | "article";
+  noindex?: boolean;
+  structuredData?: Record<string, unknown>;
 }
 
 const {
   title = "El Hakim — Aspiring Web Developer",
   description = "Portofolio El Hakim: catatan proses belajar web development, UI/UX, dan produk digital yang sedang dibangun.",
+  image = "/og/og-default.png",
+  imageAlt = "Kartu portofolio El Hakim — Aspiring Web Developer.",
+  ogType = "website",
+  noindex = false,
+  structuredData,
 } = Astro.props;
 
 const canonical = Astro.site
   ? new URL(Astro.url.pathname, Astro.site).toString()
   : undefined;
-const ogImage = Astro.site
-  ? new URL("/og/og-default.png", Astro.site).toString()
-  : "/og/og-default.png";
+const ogImage = Astro.site ? new URL(image, Astro.site).toString() : image;
 ---
 
 <!doctype html>
@@ -29,11 +37,15 @@ const ogImage = Astro.site
     <meta name="author" content="El Hakim" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="theme-color" content="#f4f1e8" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e100f" media="(prefers-color-scheme: dark)" />
     {canonical && <link rel="canonical" href={canonical} />}
+    {noindex && <meta name="robots" content="noindex" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="El Hakim" />
     <meta property="og:locale" content="id_ID" />
     <meta property="og:title" content={title} />
@@ -43,18 +55,20 @@ const ogImage = Astro.site
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta
-      property="og:image:alt"
-      content="Kartu portofolio El Hakim — Aspiring Web Developer."
-    />
+    <meta property="og:image:alt" content={imageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta
-      name="twitter:image:alt"
-      content="Kartu portofolio El Hakim — Aspiring Web Developer."
-    />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    {
+      structuredData && (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify(structuredData)}
+        />
+      )
+    }
 
     <script is:inline>
       (() => {

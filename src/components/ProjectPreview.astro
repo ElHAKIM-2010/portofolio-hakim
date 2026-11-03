@@ -3,9 +3,10 @@ import type { CollectionEntry } from "astro:content";
 
 interface Props {
   project: CollectionEntry<"projects">;
+  priority?: boolean;
 }
 
-const { project } = Astro.props;
+const { project, priority = false } = Astro.props;
 const { preview, title } = project.data;
 ---
 
@@ -14,10 +15,12 @@ const { preview, title } = project.data;
     "preview",
     preview.image ? "preview--photo" : `preview--${preview.kind}`,
   ]}
-  role={preview.image ? undefined : "img"}
-  aria-label={preview.image ? undefined : `${title} — ${preview.caption}`}
 >
-  <div class="preview__frame">
+  <div
+    class="preview__frame"
+    role={preview.image ? undefined : "img"}
+    aria-label={preview.image ? undefined : `${title} — ${preview.caption}`}
+  >
     {
       preview.image && (
         <>
@@ -33,7 +36,8 @@ const { preview, title } = project.data;
             width={preview.image.width}
             height={preview.image.height}
             alt={preview.image.alt}
-            loading="lazy"
+            loading={priority ? "eager" : "lazy"}
+            fetchpriority={priority ? "high" : undefined}
             decoding="async"
           />
         </>
