@@ -5,10 +5,9 @@ import ProjectPreview from "./ProjectPreview.astro";
 interface Props {
   project: CollectionEntry<"projects">;
   index: number;
-  total: number;
 }
 
-const { project, index, total } = Astro.props;
+const { project, index } = Astro.props;
 const {
   title,
   category,
@@ -21,8 +20,6 @@ const {
 } = project.data;
 const href = `/work/${project.id}/`;
 const demoHost = links.demo ? new URL(links.demo).hostname : null;
-const number = String(index).padStart(2, "0");
-const totalLabel = String(total).padStart(2, "0");
 const layout = index === 1 ? "wide" : "offset";
 ---
 
@@ -32,7 +29,6 @@ const layout = index === 1 ? "wide" : "offset";
 >
   <div class="project__meta" data-reveal>
     <div class="project__kicker">
-      <span class="label">{number} / {totalLabel}</span>
       <span class="label">{category}</span>
     </div>
 

@@ -16,26 +16,22 @@ const { projects } = Astro.props;
 >
   <div class="shell">
     <div class="section-head" data-reveal>
-      <span class="label">01 — Selected work</span>
+      <span class="label">Proyek</span>
       <div class="section-head__title">
         <h2 id="work-title" class="section-title">
-          Dua proyek,<br /><em>dua tahap belajar.</em>
+          Proyek yang sudah<br /><em>saya bangun.</em>
         </h2>
       </div>
       <p class="section-head__copy">
-        Setiap proyek ditulis bersama statusnya. Keduanya bisa dicoba lewat
-        tautan demo, dan batasannya dijelaskan apa adanya.
+        Keduanya bisa dicoba lewat tautan demo. Status dan batasannya saya tulis
+        terbuka di tiap studi kasus.
       </p>
     </div>
 
     <div class="work__list">
       {
         projects.map((project, index) => (
-          <ProjectShowcase
-            project={project}
-            index={index + 1}
-            total={projects.length}
-          />
+          <ProjectShowcase project={project} index={index + 1} />
         ))
       }
     </div>

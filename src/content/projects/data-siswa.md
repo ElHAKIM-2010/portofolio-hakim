@@ -2,7 +2,7 @@
 title: "Data Siswa"
 order: 2
 category: "Manajemen data"
-summary: "Aplikasi CRUD data siswa dengan pencarian, formulir, dan tabel responsif — dibangun dengan Next.js, TypeScript, Tailwind CSS, dan MySQL."
+summary: "Aplikasi CRUD data siswa dengan pencarian, formulir, dan tabel responsif, dibangun dengan Next.js, TypeScript, Tailwind CSS, dan MySQL."
 status: "complete"
 statusLabel: "Selesai · demo"
 statusNote: "Demo tanpa login yang terhubung ke MySQL. Siapa pun bisa mengubah data, jadi jangan gunakan data pribadi sungguhan."
@@ -17,7 +17,7 @@ technologies:
   - mysql2
 preview:
   kind: "records"
-  caption: "Ilustrasi antarmuka daftar — bukan tangkapan layar, agar data siswa tidak ditampilkan."
+  caption: "Ilustrasi antarmuka daftar, bukan tangkapan layar, agar data siswa tidak ditampilkan."
 links:
   demo: "https://data-siswa-app.vercel.app"
   source: "https://github.com/ELHAKIM-2010/data-siswa-app"
@@ -25,11 +25,11 @@ links:
 
 ## Ringkasan
 
-Data Siswa adalah aplikasi administrasi untuk mencatat, mencari, memperbarui, dan menghapus data siswa. Berbeda dari mockup, versi ini benar-benar berjalan: data disimpan di MySQL dan setiap perubahan langsung tersimpan. Aplikasi dibuat sebagai proyek sekolah dan tersedia sebagai demo online.
+Data Siswa adalah aplikasi administrasi untuk mencatat, mencari, memperbarui, dan menghapus data siswa. Aplikasi ini benar-benar berjalan: data disimpan di MySQL dan setiap perubahan langsung tersimpan. Aplikasi dibuat sebagai proyek sekolah dan tersedia sebagai demo online.
 
 ## Masalah dan tujuan
 
-Pencatatan yang tersebar di banyak berkas membuat pencarian dan pembaruan rawan duplikasi. Tujuannya: satu sumber data, pencarian cepat, formulir yang jelas, dan konfirmasi sebelum menghapus. Aplikasi diarahkan untuk memudahkan pekerjaan pengelola data, bukan menambah langkah baru.
+Pencatatan yang tersebar di banyak berkas membuat pencarian dan pembaruan rawan duplikasi. Tujuannya: satu sumber data, pencarian cepat, formulir yang jelas, dan konfirmasi sebelum menghapus. Aplikasi ini dibuat untuk memudahkan pekerjaan pengelola data.
 
 ## Fitur yang berjalan
 
@@ -46,12 +46,12 @@ Pencatatan yang tersebar di banyak berkas membuat pencarian dan pembaruan rawan 
 
 ## Teknologi yang dipakai
 
-- **Next.js 16 (App Router) + React 19 + TypeScript** — halaman utama sebagai client component, dengan tipe data siswa dari formulir sampai API.
-- **Tailwind CSS 4** — tata letak, tabel, formulir, dan tampilan kartu di ponsel.
-- **Route Handlers Next.js** — endpoint `/api/siswa` dan `/api/siswa/[id]` untuk membaca dan mengubah data.
-- **MySQL di Aiven + `mysql2`** — database produksi dengan connection pool dan query berparameter.
-- **Vercel** — deployment demo; kredensial database disimpan sebagai environment variables.
-- **SQL langsung tanpa ORM** — query `SELECT`, `INSERT`, `UPDATE`, dan `DELETE` ditulis eksplisit agar alurnya mudah dipelajari.
+- **Next.js 16 (App Router) + React 19 + TypeScript**: halaman utama sebagai client component, dengan tipe data siswa dari formulir sampai API.
+- **Tailwind CSS 4**: tata letak, tabel, formulir, dan tampilan kartu di ponsel.
+- **Route Handlers Next.js**: endpoint `/api/siswa` dan `/api/siswa/[id]` untuk membaca dan mengubah data.
+- **MySQL di Aiven + `mysql2`**: database produksi dengan connection pool dan query berparameter.
+- **Vercel**: deployment demo. Kredensial database disimpan sebagai environment variables.
+- **SQL langsung tanpa ORM**: query `SELECT`, `INSERT`, `UPDATE`, dan `DELETE` ditulis eksplisit agar alurnya mudah dipelajari.
 
 ## Arsitektur dan alur data
 
@@ -61,7 +61,7 @@ Setiap operasi memakai query berparameter, bukan menyusun SQL dari input penggun
 
 ## Keamanan dan batasan
 
-Aplikasi ini belum memiliki autentikasi. Artinya siapa pun yang membuka tautan demo dapat melihat, menambah, mengubah, dan menghapus data. API juga terbuka tanpa login. Karena itu demo ini hanya cocok untuk latihan dan data contoh — jangan memasukkan data pribadi siswa sungguhan.
+Aplikasi ini belum memiliki autentikasi. Artinya siapa pun yang membuka tautan demo dapat melihat, menambah, mengubah, dan menghapus data. API juga terbuka tanpa login. Karena itu demo ini hanya cocok untuk latihan dan data contoh. Jangan memasukkan data pribadi siswa sungguhan.
 
 Di sisi server sudah ada validasi field wajib, pemeriksaan ID, query berparameter, dan penanganan NIS duplikat. Semua itu mencegah input kosong dan kesalahan query, tetapi tidak menggantikan autentikasi dan pembatasan akses. Daftar juga dimuat sekaligus tanpa paginasi, sehingga cocok untuk jumlah data kecil.
 
@@ -79,6 +79,6 @@ Aplikasi sudah tayang di tautan demo dan kode sumbernya tersedia publik. Proyek 
 
 ## Yang saya pelajari
 
-- Validasi harus dilakukan di server, bukan hanya lewat atribut formulir.
+- Validasi formulir harus diulang di server, karena atribut HTML saja bisa dilewati.
 - Query berparameter dan connection pool membuat akses database lebih aman dan rapi.
 - Aplikasi CRUD tanpa autentikasi bukan aplikasi administrasi yang siap dipakai.

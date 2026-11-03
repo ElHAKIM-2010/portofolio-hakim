@@ -11,10 +11,10 @@ const { photo, about } = profile;
 >
   <div class="shell">
     <div class="section-head" data-reveal>
-      <span class="label">02 — About</span>
+      <span class="label">Tentang</span>
       <div class="section-head__title">
         <h2 id="about-title" class="section-title">
-          Belajar dengan membangun,<br /><em>bukan hanya menonton.</em>
+          Belajar lewat<br /><em>proyek nyata.</em>
         </h2>
       </div>
       <p class="section-head__copy">{about.lead}</p>
@@ -40,28 +40,9 @@ const { photo, about } = profile;
         </figcaption>
       </figure>
 
-      <div class="about__story" data-reveal style="--reveal-delay: 80ms">
+      <div class="about__story" data-reveal>
         <div class="about__text">
           {about.paragraphs.map((paragraph) => <p class="about__para">{paragraph}</p>)}
-        </div>
-
-        <div class="about__principles">
-          <p class="label">Cara saya bekerja</p>
-          <ol class="principles">
-            {
-              about.principles.map((principle, index) => (
-                <li class="principle">
-                  <span class="label principle__index">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <div class="principle__body">
-                    <h3>{principle.title}</h3>
-                    <p>{principle.body}</p>
-                  </div>
-                </li>
-              ))
-            }
-          </ol>
         </div>
       </div>
     </div>
@@ -131,42 +112,6 @@ const { photo, about } = profile;
     font-size: clamp(1.35rem, 1.1rem + 1vw, 1.85rem);
     line-height: 1.35;
     letter-spacing: -0.01em;
-  }
-
-  .about__principles {
-    margin-top: clamp(2.5rem, 4vw, 3.5rem);
-  }
-
-  .principles {
-    margin: 0.9rem 0 0;
-    padding: 0;
-    list-style: none;
-    border-top: var(--hairline) solid var(--c-line);
-  }
-
-  .principle {
-    display: grid;
-    grid-template-columns: 2.5rem minmax(0, 1fr);
-    gap: 0.5rem 1rem;
-    padding-block: 1.15rem;
-    border-bottom: var(--hairline) solid var(--c-line);
-  }
-
-  .principle__body {
-    display: grid;
-    gap: 0.3rem;
-  }
-
-  .principle h3 {
-    font-size: 1.4rem;
-    line-height: 1.1;
-  }
-
-  .principle p {
-    color: var(--c-ink-soft);
-    font-size: 0.9375rem;
-    line-height: 1.6;
-    max-width: 34rem;
   }
 
   @media (max-width: 960px) {

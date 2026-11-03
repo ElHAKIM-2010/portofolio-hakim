@@ -2,7 +2,7 @@
 title: "USK Tech Premium"
 order: 1
 category: "E-commerce · Elektronik"
-summary: "Toko elektronik full-stack dengan katalog, akun, keranjang, checkout transfer bank, dan panel admin — dibangun dengan Next.js, TypeScript, Drizzle, dan Neon PostgreSQL."
+summary: "Toko elektronik full-stack dengan katalog, akun, keranjang, checkout transfer bank, dan panel admin, dibangun dengan Next.js, TypeScript, Drizzle, dan Neon PostgreSQL."
 status: "complete"
 statusLabel: "Selesai · demo"
 statusNote: "Proyek sekolah SMK RPL. Situs demo tayang dengan data contoh; bukan toko yang menerima transaksi nyata."
@@ -19,7 +19,7 @@ technologies:
   - Zod
 preview:
   kind: "commerce"
-  caption: "Tangkapan layar beranda dengan hero produk unggulan — data contoh."
+  caption: "Tangkapan layar beranda dengan hero produk unggulan dan data contoh."
   image:
     src: "/images/projects/usk/beranda-cover-1440.webp"
     srcSmall: "/images/projects/usk/beranda-cover-800.webp"
@@ -58,7 +58,7 @@ gallery:
 
 ## Ringkasan
 
-USK Tech Premium adalah toko elektronik yang saya bangun dari nol sebagai proyek sekolah SMK jurusan RPL. Bukan hanya mockup: katalog, akun, keranjang, checkout, pesanan, dan panel admin berjalan di atas satu database. Situs ini tayang sebagai demo dengan data contoh, bukan toko yang menerima uang sungguhan.
+USK Tech Premium adalah toko elektronik yang saya bangun dari nol sebagai proyek sekolah SMK jurusan RPL. Katalog, akun, keranjang, checkout, pesanan, dan panel admin berjalan di atas satu database. Situs ini tayang sebagai demo dengan data contoh, bukan toko yang menerima uang sungguhan.
 
 ## Masalah dan tujuan
 
@@ -66,7 +66,7 @@ Menjual elektronik berarti menjelaskan spesifikasi, stok, dan harga tanpa membua
 
 ## Peran saya
 
-Saya mengerjakan alurnya dari awal sampai tayang: arah visual, komponen antarmuka, skema database, autentikasi, validasi di server, panel admin, metadata SEO, dan deployment. Setiap fase diuji langsung di browser — register, menambah ke keranjang, checkout, sampai panel admin — sebelum dianggap selesai.
+Saya mengerjakan alurnya dari awal sampai tayang: arah visual, komponen antarmuka, skema database, autentikasi, validasi di server, panel admin, metadata SEO, dan deployment. Setiap fase saya uji langsung di browser, dari register, menambah ke keranjang, checkout, sampai panel admin, sebelum dianggap selesai.
 
 ## Fitur yang berjalan
 
@@ -77,20 +77,20 @@ Saya mengerjakan alurnya dari awal sampai tayang: arah visual, komponen antarmuk
 - **Checkout** transfer bank manual: data penerima, alamat, validasi, pembuatan pesanan, dan pengurangan stok dalam satu transaksi.
 - **Riwayat pesanan** beserta detail, dengan pemeriksaan kepemilikan agar pesanan orang lain tidak bisa dibuka.
 - **Panel admin** untuk ringkasan, CRUD produk dan kategori, edit stok, serta pencarian dan perubahan status pesanan.
-- **Keamanan** berupa pembatasan percobaan login, register, dan checkout, serta pemeriksaan role di server — bukan hanya di tampilan.
+- **Keamanan** berupa pembatasan percobaan login, register, dan checkout, serta pemeriksaan role di server, bukan hanya di tampilan.
 - **Tema terang dan gelap** yang bisa diganti dari navigasi, plus tata letak responsif.
 
 ## Teknologi yang dipakai
 
-- **Next.js (App Router) + React + TypeScript** — routing, server components, server actions, dan tipe data dari database sampai komponen.
-- **Tailwind CSS** — token warna, tipografi, dan tata letak; aksen lime dipakai hemat di atas dasar hitam, putih, dan abu-abu.
-- **Auth.js (NextAuth)** — login kredensial dengan sesi JWT HttpOnly, ditambah kolom `role` untuk membedakan pelanggan dan admin.
-- **Drizzle ORM + drizzle-kit** — skema dan migrasi database ditulis sebagai kode, bukan tabel yang dibuat manual di console.
-- **Neon PostgreSQL + driver `pg`** — database produksi; koneksi pooled untuk aplikasi dan unpooled untuk migrasi. Checkout memakai transaksi dan row lock agar stok tidak terjual dua kali.
-- **Zod** — validasi input di server untuk checkout, produk, kategori, dan autentikasi.
-- **next/image** — gambar produk lokal dioptimalkan; tipografi memakai Sora dan Geist.
-- **Vercel** — deployment produksi dengan auto-deploy dari branch `master`; kredensial database dan auth hanya ada di environment variables.
-- **SEO** — metadata per halaman, canonical, Open Graph/Twitter, sitemap dinamis, robots, JSON-LD produk, dan `noindex` untuk halaman pribadi.
+- **Next.js (App Router) + React + TypeScript**: routing, server components, server actions, dan tipe data dari database sampai komponen.
+- **Tailwind CSS**: token warna, tipografi, dan tata letak; aksen lime dipakai hemat di atas dasar hitam, putih, dan abu-abu.
+- **Auth.js (NextAuth)**: login kredensial dengan sesi JWT HttpOnly, ditambah kolom `role` untuk membedakan pelanggan dan admin.
+- **Drizzle ORM + drizzle-kit**: skema dan migrasi database ditulis sebagai kode, bukan tabel yang dibuat manual di console.
+- **Neon PostgreSQL + driver `pg`**: database produksi; koneksi pooled untuk aplikasi dan unpooled untuk migrasi. Checkout memakai transaksi dan row lock agar stok tidak terjual dua kali.
+- **Zod**: validasi input di server untuk checkout, produk, kategori, dan autentikasi.
+- **next/image**: gambar produk lokal dioptimalkan; tipografi memakai Sora dan Geist.
+- **Vercel**: deployment produksi dengan auto-deploy dari branch `master`; kredensial database dan auth hanya ada di environment variables.
+- **SEO**: metadata per halaman, canonical, Open Graph/Twitter, sitemap dinamis, robots, JSON-LD produk, dan `noindex` untuk halaman pribadi.
 
 ## Arsitektur dan alur data
 
@@ -120,4 +120,4 @@ Alur utama sudah selesai dan situs tayang di tautan demo. Kode sumber tersedia p
 
 - Otorisasi harus diperiksa di server; menyembunyikan tombol di tampilan bukan keamanan.
 - Transaksi database membuat aturan stok bisa dipercaya saat banyak permintaan datang.
-- Data contoh yang konsisten membuat demo terasa nyata tanpa harus mengarang pencapaian.
+- Data contoh yang konsisten membuat demo bisa dipakai tanpa menampilkan data asli.

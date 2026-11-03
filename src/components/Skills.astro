@@ -14,16 +14,15 @@ const levelLabel: Record<SkillLevel, string> = {
 >
   <div class="shell">
     <div class="section-head" data-reveal>
-      <span class="label">03 — Skills</span>
+      <span class="label">Keahlian</span>
       <div class="section-head__title">
         <h2 id="skills-title" class="section-title">
-          Alat dan kemampuan,<br /><em>tanpa angka persentase.</em>
+          Yang saya pakai,<br /><em>yang sedang saya pelajari.</em>
         </h2>
       </div>
       <p class="section-head__copy">
-        Dua penanda saja: yang sudah dipakai untuk membangun proyek dan yang
-        masih dipelajari. Tidak ada skor yang dikarang untuk terlihat lebih
-        lengkap.
+        Dua penanda: alat yang sudah dipakai untuk membangun proyek, dan yang
+        masih saya pelajari. Tidak ada skor.
       </p>
     </div>
 
@@ -39,7 +38,7 @@ const levelLabel: Record<SkillLevel, string> = {
         ></span>
         Sedang dipelajari
       </span>
-      <span class="label skills__legend-note">Dua status, bukan skor</span>
+      <span class="label skills__legend-note">Status keahlian</span>
     </div>
 
     <ul class="skills__groups">
@@ -50,9 +49,6 @@ const levelLabel: Record<SkillLevel, string> = {
             data-reveal
             style={`--reveal-delay: ${index * 60}ms`}
           >
-            <span class="label skill-group__index">
-              {String(index + 1).padStart(2, "0")}
-            </span>
             <div class="skill-group__head">
               <h3>{group.title}</h3>
               <p>{group.note}</p>
@@ -62,7 +58,7 @@ const levelLabel: Record<SkillLevel, string> = {
                 <li class:list={["skill", `skill--${item.level}`]}>
                   <span class="skills__mark" aria-hidden="true"></span>
                   {item.name}
-                  <span class="sr-only"> — {levelLabel[item.level]}</span>
+                  <span class="sr-only">, {levelLabel[item.level]}</span>
                 </li>
               ))}
             </ul>
@@ -119,7 +115,7 @@ const levelLabel: Record<SkillLevel, string> = {
 
   .skill-group {
     display: grid;
-    grid-template-columns: 2.5rem minmax(0, 4fr) minmax(0, 7fr);
+    grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
     gap: 1rem 1.5rem;
     padding-block: 1.6rem;
     border-bottom: var(--hairline) solid var(--c-line);
@@ -166,26 +162,11 @@ const levelLabel: Record<SkillLevel, string> = {
 
   @media (max-width: 960px) {
     .skill-group {
-      grid-template-columns: 2.5rem minmax(0, 1fr);
-    }
-
-    .skill-group__head,
-    .skill-group__items {
-      grid-column: 2;
+      grid-template-columns: 1fr;
     }
   }
 
   @media (max-width: 560px) {
-    .skill-group {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
-
-    .skill-group__head,
-    .skill-group__items {
-      grid-column: 1;
-    }
-
     .skills__legend-note {
       display: none;
     }

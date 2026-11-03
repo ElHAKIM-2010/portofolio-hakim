@@ -142,9 +142,9 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
             </nav>
 
             <div className="mobile-nav__foot">
-              <p className="label">Portfolio — Edisi 01 / 2026</p>
+              <p className="label">Portofolio 2026</p>
               <a href="/#contact" className="label" onClick={() => close(false)}>
-                Mulai percakapan
+                Hubungi saya
               </a>
             </div>
           </motion.div>

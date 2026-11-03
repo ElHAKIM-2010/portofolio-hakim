@@ -19,7 +19,7 @@ const { preview, title } = project.data;
   <div
     class="preview__frame"
     role={preview.image ? undefined : "img"}
-    aria-label={preview.image ? undefined : `${title} — ${preview.caption}`}
+    aria-label={preview.image ? undefined : `${title}, ${preview.caption}`}
   >
     {
       preview.image && (
@@ -49,14 +49,14 @@ const { preview, title } = project.data;
         <>
           <div class="preview__chrome" aria-hidden="true">
             <span>USK / TECH PREMIUM</span>
-            <span>MOCKUP · DATA CONTOH</span>
+            <span>ILUSTRASI · DATA CONTOH</span>
           </div>
           <div class="commerce" aria-hidden="true">
             <div class="commerce__head">
               <p class="commerce__label">Elektronik / Katalog 2026</p>
               <p class="commerce__title">
-                Pilih alat,<br />
-                <em>bukan kebisingan.</em>
+                Pilih perangkat,<br />
+                <em>yang sesuai.</em>
               </p>
               <p class="commerce__note">Katalog ringkas untuk kebutuhan harian.</p>
             </div>
@@ -113,7 +113,7 @@ const { preview, title } = project.data;
         <>
           <div class="preview__chrome preview__chrome--dark" aria-hidden="true">
             <span>DATA SISWA</span>
-            <span>MOCKUP · DATA CONTOH</span>
+            <span>ILUSTRASI · DATA CONTOH</span>
           </div>
           <div class="records" aria-hidden="true">
             <div class="records__head">

@@ -1,26 +1,22 @@
 ---
 import { profile } from "../data/profile";
-import EditionMark from "./EditionMark.astro";
 ---
 
 <section class="hero" aria-labelledby="hero-title">
   <div class="shell hero__inner">
     <div class="hero__meta">
-      <span class="label">{profile.edition}</span>
+      <span class="label">Portofolio 2026</span>
       <span class="label">Web development · UI/UX</span>
     </div>
 
     <div class="hero__stage">
       <h1 id="hero-title" class="hero__title">
-        <span class="hero__line">Building digital</span>
-        <span class="hero__line"><em>experiences</em></span>
+        <span class="hero__line">Belajar web</span>
+        <span class="hero__line"><em>dari tampilan</em></span>
         <span class="hero__line hero__line--last">
-          with purpose<span class="hero__square" aria-hidden="true"></span>
+          sampai data<span class="hero__square" aria-hidden="true"></span>
         </span>
       </h1>
-      <div class="hero__mark">
-        <EditionMark size="lg" />
-      </div>
     </div>
 
     <div class="hero__lower">
@@ -33,22 +29,22 @@ import EditionMark from "./EditionMark.astro";
 
       <div class="hero__actions">
         <a href="#work" class="link-arrow link-arrow--down">
-          Explore work <span aria-hidden="true">↓</span>
+          Lihat proyek <span aria-hidden="true">↓</span>
         </a>
         <a href="#contact" class="link-arrow link-arrow--muted">
-          Contact <span aria-hidden="true">→</span>
+          Hubungi saya <span aria-hidden="true">→</span>
         </a>
       </div>
     </div>
 
     <div class="hero__foot">
       <a href="#work" class="hero__scroll">
-        <span class="label">Scroll</span>
+        <span class="label">Gulir</span>
         <span class="hero__scroll-track" aria-hidden="true">
           <span class="hero__scroll-thumb"></span>
         </span>
       </a>
-      <span class="label">Selected work — 02 proyek</span>
+      <span class="label">2 proyek · 2026</span>
     </div>
   </div>
 </section>
@@ -76,7 +72,7 @@ import EditionMark from "./EditionMark.astro";
   }
 
   .hero__title {
-    grid-column: 1 / 11;
+    grid-column: 1 / -1;
     font-size: clamp(3.25rem, 11.5vw, 10rem);
     line-height: 0.88;
     letter-spacing: -0.03em;
@@ -101,12 +97,6 @@ import EditionMark from "./EditionMark.astro";
     margin-left: 0.08em;
     background-color: var(--c-accent);
     transform: translateY(-0.04em);
-  }
-
-  .hero__mark {
-    grid-column: 11 / 13;
-    justify-self: end;
-    margin-bottom: 0.25rem;
   }
 
   .hero__lower {
@@ -189,14 +179,6 @@ import EditionMark from "./EditionMark.astro";
   }
 
   @media (max-width: 960px) {
-    .hero__title {
-      grid-column: 1 / -1;
-    }
-
-    .hero__mark {
-      display: none;
-    }
-
     .hero__lower {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
