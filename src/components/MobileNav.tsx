@@ -132,7 +132,6 @@ export default function MobileNav({ items }: { items: NavItem[] }) {
                     }}
                   >
                     <a href={`/#${item.id}`} onClick={() => close(false)}>
-                      <span className="label">0{index + 1}</span>
                       <span>{item.label}</span>
                       <span aria-hidden="true">↗</span>
                     </a>

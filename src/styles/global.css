@@ -447,11 +447,6 @@ html[data-theme="dark"] .theme-toggle__icon--moon {
   text-decoration: none;
 }
 
-.mobile-nav__body a .label {
-  width: 1.75rem;
-  flex: none;
-}
-
 .mobile-nav__body a span:last-child {
   margin-left: auto;
   color: var(--c-muted);
