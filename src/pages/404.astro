@@ -1,0 +1,170 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<BaseLayout
+  title="Halaman tidak ditemukan — El Hakim"
+  description="Halaman yang Anda cari tidak tersedia. Kembali ke beranda untuk melihat proyek dan catatan proses El Hakim."
+>
+  <Header />
+
+  <main id="main" class="notfound">
+    <div class="shell notfound__inner">
+      <div class="notfound__meta">
+        <span class="label">404 — Halaman tidak ditemukan</span>
+        <span class="label">El Hakim — Portfolio</span>
+      </div>
+
+      <div class="notfound__body">
+        <p class="notfound__code" aria-hidden="true">
+          <span>4</span><span class="notfound__zero">0</span><span>4</span>
+        </p>
+
+        <div class="notfound__copy">
+          <h1 class="notfound__title">Alamat ini <em>tidak ada.</em></h1>
+          <p class="notfound__text">
+            Mungkin tautannya salah ketik, atau halaman sudah dipindahkan.
+            Dua proyek dan catatan prosesnya tetap bisa dibuka dari beranda.
+          </p>
+          <div class="notfound__actions">
+            <a href="/" class="link-arrow">
+              Kembali ke beranda <span aria-hidden="true">→</span>
+            </a>
+            <a href="/#work" class="link-arrow link-arrow--muted">
+              Lihat proyek <span aria-hidden="true">↓</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="notfound__foot">
+        <span class="label">Edisi 01 — 2026</span>
+        <a
+          href="https://github.com/ELHAKIM-2010"
+          class="label notfound__foot-link"
+          target="_blank"
+          rel="noopener"
+        >
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .notfound {
+    display: flex;
+    align-items: center;
+    min-height: calc(100svh - var(--header-height));
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .notfound__inner {
+    display: grid;
+    align-content: center;
+  }
+
+  .notfound__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: var(--hairline) solid var(--c-line);
+  }
+
+  .notfound__body {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: 2rem var(--gutter);
+    align-items: end;
+    padding-block: clamp(2.5rem, 7vw, 6rem);
+  }
+
+  .notfound__code {
+    grid-column: 1 / 8;
+    margin: 0;
+    color: var(--c-ink);
+    font-family: var(--font-display);
+    font-size: clamp(7rem, 24vw, 19rem);
+    line-height: 0.72;
+    letter-spacing: -0.06em;
+    font-variant-numeric: lining-nums;
+  }
+
+  .notfound__zero {
+    color: transparent;
+    -webkit-text-stroke: 2px var(--c-ink);
+  }
+
+  .notfound__copy {
+    grid-column: 9 / -1;
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+    padding-bottom: 0.5rem;
+  }
+
+  .notfound__title {
+    font-size: clamp(2.25rem, 1.2rem + 3vw, 3.75rem);
+    line-height: 0.98;
+    letter-spacing: -0.02em;
+  }
+
+  .notfound__text {
+    max-width: 26rem;
+    color: var(--c-ink-soft);
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .notfound__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1.75rem;
+    margin-top: 0.5rem;
+  }
+
+  .notfound__foot {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.6rem 2rem;
+    padding-top: 1.1rem;
+    border-top: var(--hairline) solid var(--c-line);
+  }
+
+  .notfound__foot-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--c-ink);
+    text-decoration: none;
+  }
+
+  @media (max-width: 960px) {
+    .notfound__code {
+      grid-column: 1 / -1;
+      font-size: clamp(6.5rem, 32vw, 14rem);
+    }
+
+    .notfound__copy {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .notfound__body {
+      gap: 1.75rem;
+    }
+
+    .notfound__zero {
+      -webkit-text-stroke-width: 1.25px;
+    }
+  }
+</style>
